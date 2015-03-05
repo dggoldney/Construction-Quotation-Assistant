@@ -2,10 +2,12 @@
 import java.util.ArrayList;
 
 /**
- * A WallSegment is made up of bays. The number of bays is determined by the length.
- * 
+ * A WallSegment is made up of bays. The number of bays is determined by the
+ * length.
+ *
  */
 public class WallSegment {
+
 	private ArrayList<Integer> bays;
 	public boolean local;
 	public boolean access;
@@ -13,6 +15,7 @@ public class WallSegment {
 	public int angle = 180;
 
 	public enum Difficulty {
+
 		not, sandy, limestone, bluestone
 	}
 

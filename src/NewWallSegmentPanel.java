@@ -6,9 +6,9 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 
-class InputPanel extends JPanel {
+class NewWallSegmentPanel extends JPanel {
 
-	public InputPanel() {
+	public NewWallSegmentPanel() {
 		setLayout(new GridLayout(5, 2));
 		add(new JLabel("Length"));
 		add(new JSpinner(new SpinnerNumberModel(0, 0, 100, 2)));
