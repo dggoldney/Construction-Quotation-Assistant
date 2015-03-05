@@ -13,7 +13,6 @@ public class WallSegment {
 	public int angle = 180;
 
 	public enum Difficulty {
-
 		not, sandy, limestone, bluestone
 	}
 
