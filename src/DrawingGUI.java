@@ -1,4 +1,5 @@
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
@@ -31,9 +32,9 @@ public class DrawingGUI extends JFrame {
 		super("Construction Quotation Assistant");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		createMenu();
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(new DrawingPanel());
+		Container c = getContentPane();
+		setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
+		c.add(new DrawingPanel());
 		
 		JPanel widgetsPanel = new JPanel();
 		widgetsPanel.setLayout(new BoxLayout(widgetsPanel, BoxLayout.X_AXIS));
@@ -67,7 +68,7 @@ public class DrawingGUI extends JFrame {
 		
 		widgetsPanel.add(optionsPanel);
 		
-		mainPanel.add(widgetsPanel);
+		c.add(widgetsPanel);
 		
 		addSegmentButton.addActionListener(new ActionListener() {
 
@@ -83,9 +84,8 @@ public class DrawingGUI extends JFrame {
 		});
 
 		JScrollPane drawingPanelScrollPane = new JScrollPane(new QuotationPanel());
-		mainPanel.add(drawingPanelScrollPane);
+		c.add(drawingPanelScrollPane);
 
-		getContentPane().add(mainPanel);
 		pack();
 		setVisible(true);
 
