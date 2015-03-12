@@ -8,43 +8,46 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class DrawingGUI extends JFrame {
-	static String[] difficultyOptions = { "Normal", "Sandy", "Limestone", "Bluestone"};
+
+	public Wall wall;
+	final static String[] difficultyOptions = {"Normal", "Sandy", "Limestone", "Bluestone"};
 
 	public static void main(String[] args) {
-		final DrawingGUI drawingGUI = new DrawingGUI();
+		DrawingGUI gui = new DrawingGUI();
+
+		NewWallSegmentPanel inputPanel = new NewWallSegmentPanel();
+		int result = JOptionPane.showConfirmDialog(null, inputPanel, "Add a wall segment", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (result == JOptionPane.OK_OPTION) {
+			gui.wall.addWallSegment(new WallSegment(inputPanel.getLength(), inputPanel.getStartHeight(), inputPanel.getEndHeight(), inputPanel.getAngle()));
+		}
+		
+		gui.pack();
+		gui.setVisible(true);
 	}
-	
+
 	public DrawingGUI() throws HeadlessException {
 		super("Construction Quotation Assistant");
+		wall = new Wall(false, false, Difficulty.normal);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		createMenu();
 		Container c = getContentPane();
 		setLayout(new BoxLayout(c, BoxLayout.Y_AXIS));
-		c.add(new DrawingPanel());
-		
+		final DrawingPanel drawingPanel = new DrawingPanel(this);
+		c.add(drawingPanel);
+
 		JPanel widgetsPanel = new JPanel();
 		widgetsPanel.setLayout(new BoxLayout(widgetsPanel, BoxLayout.X_AXIS));
-		
-		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setMaximumSize(new Dimension(250, 60));
-		buttonsPanel.setLayout(new GridLayout(2, 2));
-		
-		buttonsPanel.add(new JLabel("Job identifier"));
-		JTextField jobIdentifier = new JTextField();
-		jobIdentifier.setPreferredSize(new Dimension(70, 30));
-		buttonsPanel.add(jobIdentifier);
-		
+
 		JButton addSegmentButton = new JButton("Add segment");
-		buttonsPanel.add(addSegmentButton);
-		widgetsPanel.add(buttonsPanel);
-		
-		widgetsPanel.add(Box.createRigidArea(new Dimension(30,0)));
-		
+		widgetsPanel.add(addSegmentButton);
+
+		widgetsPanel.add(Box.createRigidArea(new Dimension(30, 0)));
+
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setMaximumSize(new Dimension(300, 150));
 		optionsPanel.setBorder(BorderFactory.createTitledBorder("Options"));
-		optionsPanel.setLayout(new GridLayout(3,1));
-		
+		optionsPanel.setLayout(new GridLayout(3, 1));
+
 		JCheckBox local = new JCheckBox("Is the wall to be built locally?");
 		optionsPanel.add(local, 0);
 		JCheckBox access = new JCheckBox("Is there adequate access to the site?");
@@ -52,18 +55,33 @@ public class DrawingGUI extends JFrame {
 		JComboBox difficulty = new JComboBox(difficultyOptions);
 		optionsPanel.add(difficulty, 2);
 		
+		ActionListener settingsListener = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DrawingGUI.this.wall.setLocal(local.isSelected());
+				DrawingGUI.this.wall.setAccess(access.isSelected());
+				DrawingGUI.this.wall.setDifficulty((String) difficulty.getSelectedItem());
+			}
+		};
+		
+		local.addActionListener(settingsListener);
+		access.addActionListener(settingsListener);
+		difficulty.addActionListener(settingsListener);
+
 		widgetsPanel.add(optionsPanel);
-		
+
 		c.add(widgetsPanel);
-		
+
 		addSegmentButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JPanel inputPanel = new NewWallSegmentPanel();
+				NewWallSegmentPanel inputPanel = new NewWallSegmentPanel();
 				int result = JOptionPane.showConfirmDialog(DrawingGUI.this, inputPanel, "Add a wall segment", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
-					// TODO add wall segment from fields in inputPanel
+					wall.addWallSegment(new WallSegment(inputPanel.getLength(), inputPanel.getStartHeight(), inputPanel.getEndHeight(), inputPanel.getAngle()));
+					drawingPanel.repaint();
 				}
 			}
 
@@ -71,10 +89,6 @@ public class DrawingGUI extends JFrame {
 
 		JScrollPane drawingPanelScrollPane = new JScrollPane(new QuotationPanel());
 		c.add(drawingPanelScrollPane);
-
-		pack();
-		setVisible(true);
-
 	}
 
 	private void createMenu() {
