@@ -13,7 +13,7 @@ public class DrawingGUI extends JFrame {
 	public static void main(String[] args) {
 		final DrawingGUI drawingGUI = new DrawingGUI();
 	}
-
+	
 	public DrawingGUI() throws HeadlessException {
 		super("Construction Quotation Assistant");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
