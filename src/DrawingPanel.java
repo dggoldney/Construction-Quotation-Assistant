@@ -2,13 +2,15 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.List;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class DrawingPanel extends JPanel {
 
+	// TODO Spec says that the job identifier should be included in the drawing space
+	// TODO modify the height of individual bays by clicking and dragging
+	
     //TODO multiple view angles with buttons to switch between them.
     //TODO support for multiple walls connecting at an angle
     //TODO improve visual design to appear more like a wall and less like a boring game of tetris? the edges of bays could look a lot better but doing so might take up more space and complicate the visualization.
