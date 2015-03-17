@@ -19,7 +19,7 @@ class NewWallSegmentPanel extends JPanel {
 		endHeight = new JSpinner(new SpinnerNumberModel(15, 0, 100, 0.2));
 		add(endHeight);
 		add(new JLabel("Angle"));
-		angle = new JSpinner(new SpinnerNumberModel(0, 0, 90, 1));
+		angle = new JSpinner(new SpinnerNumberModel(180, 0, 360, 1));
 		add(angle);
 	}
 	private final JSpinner angle;
