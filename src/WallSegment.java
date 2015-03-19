@@ -26,7 +26,7 @@ public class WallSegment {
 		for (int bay = 0; bay < length / 2; bay++) {
 			bayHeights.add((int) Math.round(startHeight + (endHeight - startHeight) * bay / length / 2));
 		}
-                this.angle = angle;
+		this.angle = angle;
 	}
 
 	public void setAngle(int angle) {

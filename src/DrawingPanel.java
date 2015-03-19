@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class DrawingPanel extends JPanel {
 
@@ -42,7 +43,7 @@ public class DrawingPanel extends JPanel {
         topPanel = new TopViewDrawingPanel(gui);
         frontPanel = new FrontViewDrawingPanel(gui);
         
-        this.add(topPanel);
+        this.add(new JScrollPane(topPanel));
         this.add(frontPanel);
         
     }

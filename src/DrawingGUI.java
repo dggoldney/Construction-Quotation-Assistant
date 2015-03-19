@@ -19,10 +19,12 @@ public class DrawingGUI extends JFrame {
 		int result = JOptionPane.showConfirmDialog(null, inputPanel, "Add a wall segment", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			gui.wall.addWallSegment(new WallSegment(inputPanel.getLength(), inputPanel.getStartHeight(), inputPanel.getEndHeight(), inputPanel.getAngle()));
+			gui.pack();
+			gui.setVisible(true);
+		} else {
+			gui.dispose();
 		}
-		
-		gui.pack();
-		gui.setVisible(true);
+
 	}
 
 	public DrawingGUI() throws HeadlessException {
@@ -54,7 +56,7 @@ public class DrawingGUI extends JFrame {
 		optionsPanel.add(access, 1);
 		JComboBox difficulty = new JComboBox(difficultyOptions);
 		optionsPanel.add(difficulty, 2);
-		
+
 		ActionListener settingsListener = new ActionListener() {
 
 			@Override
@@ -64,7 +66,7 @@ public class DrawingGUI extends JFrame {
 				DrawingGUI.this.wall.setDifficulty((String) difficulty.getSelectedItem());
 			}
 		};
-		
+
 		local.addActionListener(settingsListener);
 		access.addActionListener(settingsListener);
 		difficulty.addActionListener(settingsListener);
@@ -82,6 +84,7 @@ public class DrawingGUI extends JFrame {
 				if (result == JOptionPane.OK_OPTION) {
 					wall.addWallSegment(new WallSegment(inputPanel.getLength(), inputPanel.getStartHeight(), inputPanel.getEndHeight(), inputPanel.getAngle()));
 					drawingPanel.repaint();
+					drawingPanel.revalidate();
 				}
 			}
 
