@@ -15,12 +15,14 @@ public class DrawingGUI extends JFrame {
 	public static void main(String[] args) {
 		DrawingGUI gui = new DrawingGUI();
 
-		NewWallSegmentPanel inputPanel = new NewWallSegmentPanel();
+		NewWallSegmentPanel inputPanel = new NewWallSegmentPanel(false);
 		int result = JOptionPane.showConfirmDialog(null, inputPanel, "Add a wall segment", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			gui.wall.addWallSegment(new WallSegment(inputPanel.getLength(), inputPanel.getStartHeight(), inputPanel.getEndHeight(), inputPanel.getAngle()));
 			gui.pack();
 			gui.setVisible(true);
+			
+			gui.quotationPanel.drawQuote();
 		} else {
 			gui.dispose();
 		}
@@ -74,25 +76,29 @@ public class DrawingGUI extends JFrame {
 		widgetsPanel.add(optionsPanel);
 
 		c.add(widgetsPanel);
+		quotationPanel = new QuotationPanel(this);
+
+		JScrollPane drawingPanelScrollPane = new JScrollPane(quotationPanel);
+		c.add(drawingPanelScrollPane);
 
 		addSegmentButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				NewWallSegmentPanel inputPanel = new NewWallSegmentPanel();
+				NewWallSegmentPanel inputPanel = new NewWallSegmentPanel(true);
 				int result = JOptionPane.showConfirmDialog(DrawingGUI.this, inputPanel, "Add a wall segment", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 				if (result == JOptionPane.OK_OPTION) {
 					wall.addWallSegment(new WallSegment(inputPanel.getLength(), inputPanel.getStartHeight(), inputPanel.getEndHeight(), inputPanel.getAngle()));
 					drawingPanel.repaint();
 					drawingPanel.revalidate();
+					quotationPanel.revalidate();
+					quotationPanel.drawQuote();
 				}
 			}
 
 		});
-
-		JScrollPane drawingPanelScrollPane = new JScrollPane(new QuotationPanel());
-		c.add(drawingPanelScrollPane);
 	}
+	private QuotationPanel quotationPanel;
 
 	private void createMenu() {
 		JMenuBar menuBar = new JMenuBar();
