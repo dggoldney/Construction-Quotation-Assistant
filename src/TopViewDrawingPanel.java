@@ -4,6 +4,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,7 +23,7 @@ import javax.swing.JPanel;
  * user interaction (selection of a wallsegment for display on the frontPanel)
  * wall segments should default to the angle of the previous segment, rather than parallel with the x axis
  */
-public class TopViewDrawingPanel extends JPanel {
+public class TopViewDrawingPanel extends JPanel implements MouseListener, MouseMotionListener{
 
 	DrawingGUI gui;
 
@@ -27,12 +32,15 @@ public class TopViewDrawingPanel extends JPanel {
 
 	int currentWindowHeight;
 	int currentWindowWidth;
+	
+	ArrayList<Polygon> rectangles;
 
 	public TopViewDrawingPanel(DrawingGUI gui) {
 		this.gui = gui;
 //		setPreferredSize(new Dimension(720, 430));
 		setBackground(Color.GRAY);
 		add(new JLabel("Top View"));
+		rectangles = new ArrayList<>();
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -66,6 +74,7 @@ public class TopViewDrawingPanel extends JPanel {
 		g.fillPolygon(p);
 		g.setColor(Color.WHITE);
 		g.drawPolygon(p);
+		rectangles.add(p);
 
 		return new Point(lastX, lastY);
 	}
@@ -96,5 +105,41 @@ public class TopViewDrawingPanel extends JPanel {
 			positionY = (int) x.getY();
 		}
 		setPreferredSize(new Dimension(maxX, maxY));
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		for (Polygon p : rectangles) {
+			if (p.contains(e.getPoint())) {
+				
+			}
+		}
 	}
 }
